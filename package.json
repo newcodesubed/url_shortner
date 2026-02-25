@@ -5,6 +5,7 @@
   "author": "subed",
   "license": "subed",
   "dependencies": {
+    "body-parser": "^2.2.2",
     "express": "^5.2.1",
     "lodash": "^4.17.23",
     "nanoid": "^5.1.6"
