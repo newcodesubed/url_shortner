@@ -1,0 +1,10 @@
+{
+  "name": "url_shortner",
+  "version": "1",
+  "main": "index.js",
+  "author": "subed",
+  "license": "subed",
+  "dependencies": {
+    "lodash": "^4.17.23"
+  }
+}
