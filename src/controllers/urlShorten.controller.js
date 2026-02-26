@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import urlShortenHelper from "../helpers/urlShorten.helper.js";
 // will be using db in next version
 let urls = {};
-function urlShorten(req, res) {
+async function urlShorten(req, res) {
   let originalUrl = req.body?.originalUrl;
 
   if (!originalUrl) {
@@ -11,7 +11,7 @@ function urlShorten(req, res) {
   }
   let originalNormalizedUrl;
   try {
-    originalNormalizedUrl = urlShortenHelper.normalizeUrl(originalUrl);
+    originalNormalizedUrl = await urlShortenHelper.normalizeUrl(originalUrl);
   } catch (err) {
     return res.status(400).json({
       error: err.message,
@@ -55,7 +55,10 @@ function getRedirectUrl(req, res) {
     return res.sendStatus(404);
   }
 
-  return res.redirect(originalUrl);
+  // return res.redirect(originalUrl);
+  return res.json({
+    redirectTo: originalUrl
+  });
 }
 export default {
   urlShorten,

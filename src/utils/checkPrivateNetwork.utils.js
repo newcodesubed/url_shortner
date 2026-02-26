@@ -34,3 +34,6 @@ async function isPrivateOrInternal(hostname) {
     return true; // Fail closed
   }
 }
+export default {
+    isPrivateOrInternal
+}
