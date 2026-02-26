@@ -6,11 +6,12 @@
   "author": "subed",
   "license": "MIT",
   "scripts": {
-  "dev": "nodemon app.js",
-  "start": "node app.js"
-},
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
   "dependencies": {
     "express": "4",
+    "ipaddr.js": "^2.3.0",
     "lodash": "^4.17.23",
     "nanoid": "^5.1.6"
   },
