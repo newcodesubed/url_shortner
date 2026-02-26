@@ -1,16 +1,13 @@
-import bodyParser from 'body-parser';
-import express from "express"
+import express from 'express';
+import routes from './src/routes/index.routes.js';
 
-import routers from './src/routes/index.routes';
-PORT= 3001
 const app = express();
 
-// Parse JSON bodies (application/json)
-app.use(bodyParser.json());
+const PORT = process.env.PORT || 3001;
 
-app.use('/urlShorten/v1', routers);
+app.use(express.json());
+app.use('/subed/v1',routes);
 
-
-app.listen(PORT,()=>{
-    console.log(`App running on port ${PORT}`);
-})
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
