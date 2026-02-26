@@ -1,4 +1,5 @@
-import express from "express";
+// import express from "express";
+import urlShortenHelper from "../helpers/urlShorten.helper";
 // will be using db in next version
 let url ={}
 function urlShorten(req, res){
@@ -7,13 +8,8 @@ function urlShorten(req, res){
     if(!originalUrl){
         return res.sendStatus(400);
     }
-
-    originalUrl = originalUrl.trim();
-
-    if(!/^[a-zA-Z][a-aZ-Z0-9+.-]*:\/\//.test(originalUrl)){
-        originalUrl = 'https://' + originalUrl;
-    }
-    
+    // try catch
+    normalizedUrl= urlShortenHelper.normalizeUrl;
 }
 export default {
     urlShorten
