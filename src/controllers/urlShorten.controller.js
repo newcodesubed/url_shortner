@@ -1,16 +1,39 @@
 // import express from "express";
-import urlShortenHelper from "../helpers/urlShorten.helper";
+import { nanoid } from "nanoid";
+import urlShortenHelper from "../helpers/urlShorten.helper.js";
 // will be using db in next version
-let url ={}
-function urlShorten(req, res){
-    let originalUrl= req.body?.originalUrl;
-    
-    if(!originalUrl){
-        return res.sendStatus(400);
+let urls = {};
+function urlShorten(req, res) {
+  let originalUrl = req.body?.originalUrl;
+
+  if (!originalUrl) {
+    return res.sendStatus(400).json({ error: "originalUrl is required" });
+  }
+  // try catch
+  const originalNormalizedUrl = urlShortenHelper.normalizeUrl;
+
+  for (let shortId in urls) {
+    if (urls[shortId] === originalNormalizedUrl) {
+      return res.json({
+        shortUrl: `http://127.0.0.1:3001/${shortId}`,
+      });
     }
-    // try catch
-    normalizedUrl= urlShortenHelper.normalizeUrl;
+  }
+
+  let shortId;
+
+  do {
+    shortId = nanoid(6);
+  } while (urls[shortId]);
+
+  urls[shortId] = originalNormalizedUrl;
+
+  console.log(urls);
+
+  res.json({
+    shortUrl: `http://127.0.0.1:3001/${shortId}`,
+  });
 }
 export default {
-    urlShorten
-}
+  urlShorten,
+};
