@@ -9,9 +9,15 @@ function urlShorten(req, res) {
   if (!originalUrl) {
     return res.sendStatus(400).json({ error: "originalUrl is required" });
   }
-  // try catch
-  const originalNormalizedUrl = urlShortenHelper.normalizeUrl;
-
+  let originalNormalizedUrl;
+  try {
+    originalNormalizedUrl = urlShortenHelper.normalizeUrl(originalUrl);
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
+  // Deduplication check
   for (let shortId in urls) {
     if (urls[shortId] === originalNormalizedUrl) {
       return res.json({
@@ -34,6 +40,24 @@ function urlShorten(req, res) {
     shortUrl: `http://127.0.0.1:3001/${shortId}`,
   });
 }
+
+function getRedirectUrl(req, res) {
+  const { shortId } = req.params;
+  const shortIdRegex = /^[A-Za-z0-9_-]{6}$/;
+
+  if (!shortIdRegex.test(shortId)) {
+    return res.sendStatus(400);
+  }
+
+  const originalUrl = urls[shortId];
+
+  if (!originalUrl) {
+    return res.sendStatus(404);
+  }
+
+  return res.redirect(originalUrl);
+}
 export default {
   urlShorten,
+  getRedirectUrl,
 };

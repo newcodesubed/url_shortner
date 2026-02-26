@@ -7,4 +7,7 @@ router
     .route("/short")
     .post(urlShortenController.urlShorten)
 
+router
+    .route("/:shortId")
+    .get(urlShortenController.getRedirectUrl)
 export default router;
